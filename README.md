@@ -6,19 +6,21 @@ A growing collection of short explanation videos made using [Manim](https://www.
 
 
 ```plaintext
-    common/                ← Shared resources for all videos
-        assets/            ← Logos, colors, templates, etc.
+    common/                 ← Shared resources for all videos
+        assets/             ← Logos, colors, templates, etc.
 
-    renders/               ← Rendered video files (not tracked by Git)
+    renders/                ← Rendered video files (not tracked by Git)
         BinaryNumbers/
 
-    videos/                ← All video projects live here
+    videos/                 ← All video projects live here
         ProjectName/
-            assets/        ← Local images, audio, etc.
-            main.py        ← Manim animation script
+            assets/         ← Local images, audio, etc.
+            main.py         ← Manim animation script
+            README.md       ← Short explanition about project
+            script.md       ← Script for project
 
-    requirements.txt       ← Python dependencies
-    README.md              ← This file
+    requirements.txt        ← Python dependencies
+    README.md                ← This file
 ```
 
 ## Videos
