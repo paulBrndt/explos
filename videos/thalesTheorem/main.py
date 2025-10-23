@@ -259,7 +259,9 @@ class ThalesScene(InteractiveScene):
 
         self.play(
             ShowCreation(self.beta),
-            Write(self.betaLabel)
         )
 
+        self.play(
+            Write(self.betaLabel)
+        )
         self.embed()
