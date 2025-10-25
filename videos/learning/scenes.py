@@ -108,5 +108,70 @@ class CoordinateSystem(Scene):
         
 class ParabolaExample(Scene):
     def construct(self):
-        pass
+        # constants
+        x_range = (-7, 7)
+        y_range = (-5, 10)
+        active_graph = None
+        x_tracker = ValueTracker(1)
+        get_x = lambda: x_tracker.get_value()
         
+        # axes
+        axes = Axes(x_range, y_range)
+        axes.scale(.8)
+        axes.add_coordinate_labels()
+        
+        self.play(Write(axes))
+        
+        # functions
+        parabola = axes.get_graph(
+            lambda x: 0.1*x*x,
+            x_range,
+            color=BLUE
+        )
+        relu = axes.get_graph(
+            lambda x: max(0, x),
+            x_range,
+            color=YELLOW
+        )
+        parabola_label = axes.get_graph_label(parabola, r"\frac{1}{10}*x^2",)
+        relu_label = axes.get_graph_label(relu, r"ReLu",)
+
+        # dot
+        dot = Dot(fill_color=RED)
+        dot.move_to(axes.i2gp(get_x(), parabola))
+        dot.set_z_index(1)
+        
+        # adding parabola
+        active_graph = parabola
+        self.play(
+            ShowCreation(parabola),
+            FadeIn(parabola_label)
+        )
+        
+        # adding dot
+        self.play(FadeIn(dot, scale=.5))
+        
+        f_always(
+            dot.move_to,
+            lambda: axes.i2gp(get_x(), active_graph)
+        )
+        
+        # moving dot
+        self.play(x_tracker.animate.set_value(5))
+        self.play(x_tracker.animate.set_value(-5), run_time = 3)
+        dot.clear_updaters()
+        
+        # changing to relu
+        active_graph = relu
+        self.play(
+            ReplacementTransform(parabola, relu),
+            TransformMatchingTex(parabola_label, relu_label),
+            dot.animate.move_to(axes.i2gp(get_x(), relu))
+        )
+        f_always(
+            dot.move_to,
+            lambda: axes.i2gp(get_x(), active_graph)
+        )
+        self.play(x_tracker.animate.set_value(5))
+        self.play(x_tracker.animate.set_value(-5), run_time = 3)
+        self.embed()
